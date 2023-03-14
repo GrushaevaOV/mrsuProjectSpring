@@ -16,7 +16,4 @@ public class Addres {
     public int floor;        // этаж
     public int flatNumber;   // квартира
 
-    public String toStringAddress() {
-        return id + " " + city + " " + street + " " + house + " " + floor + " " + flatNumber;
     }
-}

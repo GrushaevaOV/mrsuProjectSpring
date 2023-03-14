@@ -19,13 +19,6 @@ public class ClientController {
     public List<Client> getClient (){
         return clientService.getClients();
     }
-    /*private final AddressService addressService;
-    public AddressController (AddressService addressService) {
-        this.addressService=addressService;
-    }
-    @GetMapping("internal/address")
-    public List<Client> getAddresses (){
-        return addressService.getAddresses();
-    }*/
+
 
 }

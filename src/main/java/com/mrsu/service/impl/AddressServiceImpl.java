@@ -2,32 +2,39 @@ package com.mrsu.service.impl;
 
 import com.mrsu.service.AddressService;
 import com.mrsu.service.object.Addres;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class AddressServiceImpl implements AddressService {
-
+    private final ResourceLoader resourcLoader;
+    public AddressServiceImpl(ResourceLoader resourcLoader) {
+        this.resourcLoader = resourcLoader;
+    }
     public static List<Addres> listAdress = new ArrayList<>();
     @Override
     public List <Addres> getAddresses() {
 
-      XMLInputFactory factory = XMLInputFactory.newInstance();
+        XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader parser = null;
-
         try {
-            parser = factory.createXMLStreamReader(new FileInputStream(("classpath:address.xml")));
+            Resource resource = resourcLoader.getResource("classpath:address.xml");
+            InputStream inputStream = resource.getInputStream();
+            parser = factory.createXMLStreamReader(inputStream);
         } catch (FileNotFoundException e) {
             System.out.println("Check file path");
-        } catch (XMLStreamException e) {
+        } catch (XMLStreamException | IOException e) {
             System.out.println(e.getMessage());
         }
         List<Addres> addressBook = new ArrayList<>();
@@ -38,14 +45,14 @@ public class AddressServiceImpl implements AddressService {
                 int event = parser.next();
                 if (event == XMLStreamConstants.START_ELEMENT) {
                     if (parser.getLocalName().equals("address")) {
-                        Addres add = new Addres();
-                        add.setId(Integer.parseInt(parser.getAttributeValue(0)));
-                        add.setCity(parser.getAttributeValue(1));
-                        add.setStreet(parser.getAttributeValue(2));
-                        add.setHouse(Integer.parseInt(parser.getAttributeValue(3)));
-                        add.setFloor(Integer.parseInt(parser.getAttributeValue(4)));
-                        add.setFlatNumber(Integer.parseInt(parser.getAttributeValue(5)));
-                        addressBook.add(add);
+                        Addres adddress = new Addres();
+                        adddress.setId(Integer.parseInt(parser.getAttributeValue(0)));
+                        adddress.setCity(parser.getAttributeValue(1));
+                        adddress.setStreet(parser.getAttributeValue(2));
+                        adddress.setHouse(Integer.parseInt(parser.getAttributeValue(3)));
+                        adddress.setFloor(Integer.parseInt(parser.getAttributeValue(4)));
+                        adddress.setFlatNumber(Integer.parseInt(parser.getAttributeValue(5)));
+                        addressBook.add(adddress);
                     }
                 }
             }
