@@ -22,7 +22,6 @@ public class AddressServiceImpl implements AddressService {
     public AddressServiceImpl(ResourceLoader resourcLoader) {
         this.resourcLoader = resourcLoader;
     }
-    public static List<Addres> listAdress = new ArrayList<>();
     @Override
     public List <Addres> getAddresses() {
 
@@ -60,7 +59,7 @@ public class AddressServiceImpl implements AddressService {
         } catch (XMLStreamException e) {
             System.out.println(e.getMessage());
         }
-        listAdress = addressBook;
+
     return addressBook;
     }
 

@@ -1,9 +1,9 @@
 package com.mrsu.service.impl;
 
+import com.mrsu.jpa.ClientRepository;
 import com.mrsu.service.ClientService;
 import com.mrsu.service.object.Addres;
 import com.mrsu.service.object.Client;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -16,20 +16,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+
 
 
 @Service
 public class ClientServiceImpl implements ClientService {
 
     private final ResourceLoader resourceLoader;
+
     public ClientServiceImpl(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
-    }
-    public Map convertFromListInMap(@NotNull List<Addres> list) {
-        return list.stream()
-                .collect(Collectors.toMap(Addres::getId, address -> address));
     }
 
     @Override
@@ -46,7 +42,6 @@ public class ClientServiceImpl implements ClientService {
             System.out.println(e.getMessage());
         }
         List <Addres> AddresAndClientBase = new ArrayList<>();
-        Map<Integer, Addres> addressMap = convertFromListInMap(AddressServiceImpl.listAdress);
         List<Client> clients = new ArrayList<>();
         List<Client> clientBook = new ArrayList<>();
         try {
@@ -61,7 +56,7 @@ public class ClientServiceImpl implements ClientService {
                         human.setId(Integer.parseInt(parser.getAttributeValue(0)));
                         human.setName(parser.getAttributeValue(1));
                         human.setPersonnelNumber(parser.getAttributeValue(2));
-                        human.setAddress(addressMap.get(Integer.parseInt(parser.getAttributeValue(3))));
+                        human.setAddressId(Integer.parseInt(parser.getAttributeValue(3)));
                         clientBook.add(human);
                     }
                 }
@@ -71,4 +66,12 @@ public class ClientServiceImpl implements ClientService {
         }
         return clientBook;
     }
+
+    @Override
+    public void setClients(ClientRepository clientRepository) {
+        //ClientRepository clientRepository = null;
+        clientRepository.saveAll(getClients());
+
+    }
+
 }

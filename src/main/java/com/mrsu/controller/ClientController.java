@@ -1,6 +1,7 @@
 package com.mrsu.controller;
 
 
+import com.mrsu.jpa.ClientRepository;
 import com.mrsu.service.AddressService;
 import com.mrsu.service.ClientService;
 import com.mrsu.service.object.Client;
@@ -20,5 +21,11 @@ public class ClientController {
         return clientService.getClients();
     }
 
+    @GetMapping
+    public void setClients (ClientRepository clientRepository) {
+
+        clientService.setClients(clientRepository);
+
+    }
 
 }
