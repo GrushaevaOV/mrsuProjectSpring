@@ -21,10 +21,10 @@ public class ClientController {
         return clientService.getClients();
     }
 
-    @GetMapping
-    public void setClients (ClientRepository clientRepository) {
+    @GetMapping("clients")
+    public void setClients () {
 
-        clientService.setClients(clientRepository);
+        clientService.setClients(getClient());
 
     }
 

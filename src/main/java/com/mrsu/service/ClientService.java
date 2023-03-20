@@ -8,6 +8,6 @@ import java.util.List;
 public interface ClientService {
 
     List<Client>  getClients();
-    void setClients(ClientRepository clientRepository);
+    void setClients(List <Client> clients);
 
 }

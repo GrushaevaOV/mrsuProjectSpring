@@ -4,6 +4,7 @@ import com.mrsu.jpa.ClientRepository;
 import com.mrsu.service.ClientService;
 import com.mrsu.service.object.Addres;
 import com.mrsu.service.object.Client;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
 
     private final ResourceLoader resourceLoader;
+
+    @Autowired
+    ClientRepository clientRepository;
 
     public ClientServiceImpl(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
@@ -68,9 +72,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void setClients(ClientRepository clientRepository) {
-        //ClientRepository clientRepository = null;
-        clientRepository.saveAll(getClients());
+    public void setClients(List <Client> clients) {
+        clientRepository.saveAll(clients);
 
     }
 
