@@ -2,7 +2,6 @@ package com.mrsu.service.impl;
 
 import com.mrsu.jpa.ClientRepository;
 import com.mrsu.service.ClientService;
-import com.mrsu.service.object.Addres;
 import com.mrsu.service.object.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -45,8 +44,6 @@ public class ClientServiceImpl implements ClientService {
         } catch (XMLStreamException | IOException e) {
             System.out.println(e.getMessage());
         }
-        List <Addres> AddresAndClientBase = new ArrayList<>();
-        List<Client> clients = new ArrayList<>();
         List<Client> clientBook = new ArrayList<>();
         try {
             while (true) {
