@@ -1,10 +1,15 @@
 package com.mrsu.service.impl;
 
+import com.mrsu.jpa.AddressRepository;
+import com.mrsu.jpa.ClientRepository;
 import com.mrsu.service.AddressService;
 import com.mrsu.service.object.Addres;
+import com.mrsu.service.object.Client;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -18,12 +23,17 @@ import java.util.List;
 
 @Service
 public class AddressServiceImpl implements AddressService {
+
+    @Autowired
+    AddressRepository addressRepository;
     private final ResourceLoader resourcLoader;
+
     public AddressServiceImpl(ResourceLoader resourcLoader) {
         this.resourcLoader = resourcLoader;
     }
+
     @Override
-    public List <Addres> getAddresses() {
+    public List<Addres> getAddresses() {
 
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader parser = null;
@@ -60,7 +70,15 @@ public class AddressServiceImpl implements AddressService {
             System.out.println(e.getMessage());
         }
 
-    return addressBook;
+        return addressBook;
     }
 
+    @Override
+    public void setAddress(List<Addres> addressBook) {
+
+        addressRepository.saveAll(addressBook);
+
+    }
 }
+
+

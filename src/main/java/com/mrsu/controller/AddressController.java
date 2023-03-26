@@ -20,5 +20,11 @@ public class AddressController {
     public List<Addres> getAddresses (){
         return addressService.getAddresses();
     }
+    @GetMapping("address")
+    public void setAddress () {
+
+        addressService.setAddress(getAddresses());
+
+    }
 
 }
